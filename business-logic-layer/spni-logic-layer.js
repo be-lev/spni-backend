@@ -10,18 +10,19 @@ async function getHikingSitesAsync () {
     return sites
 }
 
-async function addSiteAsync ( site) {
+async function addSiteAsync ( site) {   
     const sql = `INSERT INTO israelhikingsites VALUES(
         DEFAULT,
-        '${site.locationId}',
         '${site.name}',
         '${site.description}',
-        ${site.adultEntryPrice},
-        ${site.kidsEntryPrice})`; 
+        '${site.locationId}',
+        '${site.adultEntryPrice}',
+        '${site.kidsEntryPrice}')`; 
     const info = await dal.executeAsync(sql);
     site.siteId = info.insertId;
 
     site.location = await getLocationName(site.locationId)
+    return site
 } 
 
 async function getLocationName(locationId){
