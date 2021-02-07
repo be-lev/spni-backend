@@ -42,9 +42,20 @@ async function deleteSiteAsync(siteId){
     await dal.executeAsync(sql)
 }
 
+async function getSitesByLocationNameAsync(locationName){
+    const sql=`SELECT siteId, name, description, adultEntryPrice, kidsEntryPrice, h.location 
+    FROM israelhikingsites as I 
+    JOIN hikingsitesareas as H 
+    ON I.locationId= H.locationId
+    WHERE H.location='${locationName}'`
+    const sitesByLocationName = await dal.executeAsync(sql);
+    return sitesByLocationName
+}
+
 module.exports ={
     getAllLocationsAsync,
     addSiteAsync,
     getHikingSitesAsync,
-    deleteSiteAsync
+    deleteSiteAsync,
+    getSitesByLocationNameAsync
 }
